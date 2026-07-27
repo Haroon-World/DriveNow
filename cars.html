@@ -1,0 +1,516 @@
+<!-- cars.html -->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DriveNow - Cars</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- BOOTSTRAP -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        <!-- ✅ CORRECT -->
+        window.isUserAuthenticated = "{{ user.is_authenticated }}" === "True";
+        window.userName = "{{ user.username }}";
+    </script>
+
+</head>
+
+<body>
+
+    <!-- =========================
+     NAVBAR
+ ========================= -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
+
+        <div class="container">
+
+            <!-- LOGO -->
+
+            <a class="navbar-brand logo-text" href="index.html">
+
+                <span class="drive" style="font-size: 40px; font-weight: 800;">Drive</span>
+
+                <span class="now" style="font-size: 40px; font-weight: 800;">Now</span>
+
+            </a>
+
+            <!-- TOGGLER -->
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <!-- NAVBAR CONTENT -->
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- LINKS -->
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="index.html">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link active" href="cars.html">
+
+                            Cars
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="about.html">
+
+                            About
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="price.html">
+
+                            Pricing
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="contact.html">
+
+                            Contact
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+                <!-- BUTTONS -->
+
+                <div class="d-flex gap-3 align-items-center">
+
+                    <button class="login-btn">
+                        Login
+                    </button>
+
+                    <button class="book-btn">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+     CARS HERO SECTION
+========================= -->
+
+    <section class="cars-hero">
+
+        <div class="container text-center">
+
+            <span>DriveNow Collection</span>
+
+            <h1>Available Cars</h1>
+
+            <p>Explore our premium luxury and sports vehicles.</p>
+
+        </div>
+
+    </section>
+
+    <!-- FILTER TABS -->
+    <section class="cars-filter-section">
+        <div class="container">
+            <div class="cars-filter-tabs">
+                <button class="filter-tab active" data-filter="all">All Cars</button>
+                <button class="filter-tab" data-filter="sports">Sports</button>
+                <button class="filter-tab" data-filter="luxury">Luxury</button>
+                <button class="filter-tab" data-filter="suv">SUV</button>
+                <button class="filter-tab" data-filter="sedan">Sedan</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================
+     FEATURED CARS
+========================= -->
+
+    <section class="featured-cars cars-page-section">
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- CAR 1 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="sports">
+
+                        <img src="images/car-5.jpg" alt="BMW">
+
+                        <div class="car-info">
+
+                            <h3>BMW M4</h3>
+
+                            <p>Rs 33,500 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR 2 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="sports">
+
+                        <img src="images/car-12.jpg" alt="Audi">
+
+                        <div class="car-info">
+
+                            <h3>Audi R8</h3>
+
+                            <p>Rs 42,000 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR 3 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="luxury">
+
+                        <img src="images/car-3.jpg" alt="Ferrari">
+
+                        <div class="car-info">
+
+                            <h3>Ferrari Spider</h3>
+
+                            <p>Rs 55,800 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR 4 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="luxury">
+
+                        <img src="images/car-1.jpg" alt="Mercedes">
+
+                        <div class="car-info">
+
+                            <h3>Mercedes-Benz SLK</h3>
+
+                            <p>Rs 50,000 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR 5 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="suv">
+
+                        <img src="images/car-8.jpg" alt="Jeep">
+
+                        <div class="car-info">
+
+                            <h3>Jeep Wrangler Rubicon</h3>
+
+                            <p>Rs 39,000 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR 6 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="sports">
+
+                        <img src="images/car-4.jpg" alt="Mustang">
+
+                        <div class="car-info">
+
+                            <h3>Ford Mustang GT</h3>
+
+                            <p>Rs 47,500 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CAR 7 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="luxury">
+
+                        <img src="images/car-6.jpg" alt="Ferrari">
+
+                        <div class="car-info">
+
+                            <h3>Ferrari 488</h3>
+
+                            <p>Rs 61,500 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CAR 8 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="suv">
+
+                        <img src="images/car-2.jpg" alt="Fortuner">
+
+                        <div class="car-info">
+
+                            <h3>Toyota Fortuner</h3>
+
+                            <p>Rs 43,000 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CAR 9 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="car-card" data-category="sedan">
+
+                        <img src="images/car-11.jpg" alt="Mercedes Sedan">
+
+                        <div class="car-info">
+
+                            <h3>Mercedes-Benz C-Class</h3>
+
+                            <p>Rs 46,000 / Day</p>
+
+                            <button>
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+     FOOTER SECTION
+========================= -->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-5">
+                <!-- ABOUT -->
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-box">
+                        <h2 class="footer-logo">
+                            <span class="drive">Drive</span><span class="now">Now</span>
+                        </h2>
+
+                        <p>
+                            Premium car rental platform providing luxury, sports, and family
+                            cars at affordable prices. Fast booking and trusted service
+                            worldwide.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- QUICK LINKS -->
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-box">
+                        <h3>Quick Links</h3>
+
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+
+                            <li><a href="cars.html">Cars</a></li>
+
+                            <li><a href="about.html">About</a></li>
+
+                            <li><a href="price.html">Pricing</a></li>
+
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SERVICES -->
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box">
+                        <h3>Services</h3>
+
+                        <ul>
+                            <li><a href="cars.html">Luxury Cars</a></li>
+
+                            <li><a href="cars.html">Sports Cars</a></li>
+
+                            <li><a href="cars.html">SUV Rental</a></li>
+
+                            <li><a href="cars.html">Business Trips</a></li>
+
+                            <li><a href="cars.html">Airport Pickup</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CONTACT -->
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box">
+                        <h3>Contact Us</h3>
+
+                        <p>📍 Sargodha, Pakistan</p>
+
+                        <p>📞 +92 318 7538771</p>
+
+                        <p>✉ info@drivenow.com</p>
+
+                        <div class="social-links">
+                            <a href="https://wa.me/qr/QRHH4DNFWYCQL1">🌐</a>
+
+                            <a href="https://wa.me/qr/QRHH4DNFWYCQL1">📘</a>
+
+                            <a href="https://www.instagram.com/stoic_a_mystery?igsh=cTFlbmlpancwejAy">📸</a>
+
+                            <a href="https://www.youtube.com/">▶</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COPYRIGHT -->
+
+            <div class="footer-bottom">
+                <p>© 2026 DriveNow. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- BOOTSTRAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

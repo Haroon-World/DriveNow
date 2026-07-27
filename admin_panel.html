@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Panel — DriveNow</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+    /* Auth state injected by Django template */
+    window.isUserAuthenticated = "{{ user.is_authenticated }}" === "True";
+    window.userName = "{{ user.username }}";
+  </script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand logo-text" href="index.html">
+        <span class="drive">Drive</span><span class="now">Now</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="price.html">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link active" href="admin_panel.html">Admin</a></li>
+        </ul>
+        <div class="d-flex gap-3 align-items-center"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ADMIN WRAPPER -->
+  <div class="admin-wrapper">
+    <div class="container">
+      <div class="dashboard-header">
+        <h1>Admin Control Panel</h1>
+      </div>
+
+      <div id="adminAccessDenied" class="alert alert-danger" style="display:none">
+        ⛔ Access denied. Staff privileges required.
+        <a href="index.html" class="alert-link ms-2">Go Home</a>
+      </div>
+
+      <div id="adminPanelContent" style="display:none">
+        <div class="row g-4">
+          <!-- SIDEBAR -->
+          <div class="col-lg-3">
+            <div class="admin-sidebar">
+              <ul class="admin-menu" id="adminMenu">
+                <li><a href="#" class="active" data-tab="dashboard">Dashboard Stats</a></li>
+                <li><a href="#" data-tab="cars">Manage Cars</a></li>
+                <li><a href="#" data-tab="bookings">Manage Bookings</a></li>
+                <li><a href="#" data-tab="messages">Contact Messages</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="col-lg-9">
+            <div class="admin-content" id="contentArea">
+              <p class="text-muted">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // ── Tab switching — receives the tab name and click event ──
+    function showTab(tabName, linkEl) {
+        document.querySelectorAll('#adminMenu a').forEach(a => a.classList.remove('active'));
+        if (linkEl) linkEl.classList.add('active');
+        document.getElementById('contentArea').innerHTML = '<p class="text-muted">Loading...</p>';
+
+        const loaders = { dashboard: loadStats, cars: loadCars, bookings: loadBookings, messages: loadMessages };
+        if (loaders[tabName]) loaders[tabName]();
+    }
+
+    // Bind clicks using event delegation — no global `event` needed
+    document.getElementById('adminMenu')?.addEventListener('click', function(e) {
+        const link = e.target.closest('a[data-tab]');
+        if (!link) return;
+        e.preventDefault();
+        showTab(link.dataset.tab, link);
+    });
+
+    // ── Stats ──
+    function loadStats() {
+        fetch(getApiUrl('/api/admin/stats/'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status !== 'success') {
+                document.getElementById('contentArea').innerHTML =
+                    `<div class="alert alert-danger">${escHtml(data.message)}</div>`;
+                return;
+            }
+            document.getElementById('contentArea').innerHTML = `
+                <h3 class="mb-4">System Overview</h3>
+                <div class="row g-4">
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.total_cars}</h2><p>Total Cars</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.available_cars}</h2><p>Available Cars</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.total_bookings}</h2><p>Total Bookings</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.pending_bookings}</h2><p>Pending Bookings</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>Rs ${Number(data.total_revenue).toLocaleString()}</h2><p>Revenue (Paid)</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.total_messages}</h2><p>Messages <span class="text-danger">(${data.unread_messages} unread)</span></p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.confirmed_bookings}</h2><p>Confirmed Bookings</p></div></div>
+                    <div class="col-md-4"><div class="stat-box text-center"><h2>${data.total_users}</h2><p>Registered Users</p></div></div>
+                </div>
+            `;
+        })
+        .catch(() => {
+            document.getElementById('contentArea').innerHTML =
+                '<div class="alert alert-danger">Failed to load stats. Check your connection.</div>';
+        });
+    }
+
+    // ── Cars ──
+    function loadCars() {
+        fetch(getApiUrl('/api/admin/cars/'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status !== 'success') {
+                document.getElementById('contentArea').innerHTML =
+                    `<div class="alert alert-danger">${escHtml(data.message)}</div>`;
+                return;
+            }
+            const rows = data.cars.map(c => `
+                <tr>
+                    <td>${c.id}</td>
+                    <td>${escHtml(c.brand)}</td>
+                    <td>${escHtml(c.name)}</td>
+                    <td>Rs ${Number(c.price_per_day).toLocaleString()}</td>
+                    <td><span class="badge ${c.is_available ? 'badge-confirmed' : 'badge-cancelled'}">${c.is_available ? 'Available' : 'Unavailable'}</span></td>
+                    <td>
+                        <button class="action-btn btn-delete" style="cursor:pointer"
+                                onclick="deleteCar(${c.id}, this)">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('contentArea').innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Manage Cars</h3>
+                </div>
+                ${data.cars.length === 0
+                    ? '<div class="alert alert-info">No cars in the database yet.</div>'
+                    : `<div class="table-responsive">
+                           <table class="admin-table">
+                               <thead><tr><th>ID</th><th>Brand</th><th>Name</th><th>Price/Day</th><th>Status</th><th>Actions</th></tr></thead>
+                               <tbody>${rows}</tbody>
+                           </table>
+                       </div>`
+                }
+            `;
+        })
+        .catch(() => {
+            document.getElementById('contentArea').innerHTML =
+                '<div class="alert alert-danger">Failed to load cars.</div>';
+        });
+    }
+
+    function deleteCar(id, btn) {
+        if (!confirm('Are you sure you want to delete this car? This cannot be undone.')) return;
+        btn.disabled = true;
+        btn.textContent = 'Deleting…';
+
+        fetch(getApiUrl(`/api/admin/cars/${id}/`), {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(data => {
+            showToast(data.message || 'Car deleted.');
+            if (data.status === 'success') loadCars();
+            else btn.disabled = false;
+        })
+        .catch(() => {
+            showToast('Failed to delete car.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Delete';
+        });
+    }
+
+    // ── Bookings ──
+    function loadBookings() {
+        fetch(getApiUrl('/api/admin/bookings/'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status !== 'success') {
+                document.getElementById('contentArea').innerHTML =
+                    `<div class="alert alert-danger">${escHtml(data.message)}</div>`;
+                return;
+            }
+            const rows = data.bookings.map(b => `
+                <tr>
+                    <td>#${b.id}</td>
+                    <td>${escHtml(b.name)}<br><small class="text-muted">${escHtml(b.phone)}</small></td>
+                    <td>${escHtml(b.preferred_car)}</td>
+                    <td style="font-size:13px">${escHtml(b.pickup_date)} → ${escHtml(b.return_date)}<br><small>${b.days} day(s)</small></td>
+                    <td>Rs ${Number(b.total_price).toLocaleString()}</td>
+                    <td>
+                        <select onchange="updateBooking(${b.id}, 'status', this.value)"
+                                class="form-select form-select-sm" style="cursor:pointer">
+                            <option value="pending"   ${b.status==='pending'   ? 'selected' : ''}>Pending</option>
+                            <option value="confirmed" ${b.status==='confirmed' ? 'selected' : ''}>Confirmed</option>
+                            <option value="cancelled" ${b.status==='cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select onchange="updateBooking(${b.id}, 'payment_status', this.value)"
+                                class="form-select form-select-sm" style="cursor:pointer">
+                            <option value="unpaid" ${b.payment_status==='unpaid' ? 'selected' : ''}>Unpaid</option>
+                            <option value="paid"   ${b.payment_status==='paid'   ? 'selected' : ''}>Paid</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('contentArea').innerHTML = `
+                <h3 class="mb-4">Manage Bookings</h3>
+                ${data.bookings.length === 0
+                    ? '<div class="alert alert-info">No bookings yet.</div>'
+                    : `<div class="table-responsive">
+                           <table class="admin-table">
+                               <thead><tr><th>ID</th><th>Customer</th><th>Car</th><th>Dates</th><th>Total</th><th>Status</th><th>Payment</th></tr></thead>
+                               <tbody>${rows}</tbody>
+                           </table>
+                       </div>`
+                }
+            `;
+        })
+        .catch(() => {
+            document.getElementById('contentArea').innerHTML =
+                '<div class="alert alert-danger">Failed to load bookings.</div>';
+        });
+    }
+
+    function updateBooking(id, field, value) {
+        fetch(getApiUrl(`/api/admin/bookings/${id}/`), {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ [field]: value }),
+            credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(data => showToast(data.message || 'Updated.', data.status === 'success' ? 'success' : 'error'))
+        .catch(() => showToast('Update failed.', 'error'));
+    }
+
+    // ── Messages ──
+    function loadMessages() {
+        fetch(getApiUrl('/api/admin/messages/'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status !== 'success') {
+                document.getElementById('contentArea').innerHTML =
+                    `<div class="alert alert-danger">${escHtml(data.message)}</div>`;
+                return;
+            }
+            const cards = data.messages.map(m => `
+                <div class="booking-card mb-3" style="flex-direction:column; align-items:flex-start;">
+                    <div class="booking-details" style="width:100%">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 style="margin:0">${escHtml(m.subject)}</h3>
+                            <span class="text-muted" style="font-size:12px">${escHtml(m.created_at)}</span>
+                        </div>
+                        <p class="mt-1 mb-2"><strong>From:</strong> ${escHtml(m.name)} &lt;${escHtml(m.email)}&gt;
+                            ${m.phone ? ` &bull; ${escHtml(m.phone)}` : ''}
+                            ${!m.is_read ? '<span class="badge badge-pending ms-2">Unread</span>' : ''}
+                        </p>
+                        <p style="background:#f8f9fa;padding:12px;border-radius:8px;margin:0;white-space:pre-wrap">${escHtml(m.message)}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('contentArea').innerHTML = `
+                <h3 class="mb-4">Contact Messages</h3>
+                ${data.messages.length === 0
+                    ? '<div class="alert alert-info">No messages yet.</div>'
+                    : cards
+                }
+            `;
+        })
+        .catch(() => {
+            document.getElementById('contentArea').innerHTML =
+                '<div class="alert alert-danger">Failed to load messages.</div>';
+        });
+    }
+
+    // ── Init — wait for DOMContentLoaded then check auth ──
+    document.addEventListener('DOMContentLoaded', () => {
+        // script.js updateNavbar() will have run; now verify staff status
+        const staff = localStorage.getItem('isStaff') === 'true' || window.isUserAuthenticated;
+
+        // For Django-rendered pages, check via the stats API (returns 403 if not staff)
+        fetch(getApiUrl('/api/admin/stats/'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('adminPanelContent').style.display = 'block';
+                loadStats();
+            } else {
+                document.getElementById('adminAccessDenied').style.display = 'block';
+            }
+        })
+        .catch(() => {
+            document.getElementById('adminAccessDenied').style.display = 'block';
+        });
+    });
+  </script>
+</body>
+</html>

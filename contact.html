@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Contact DriveNow – Reach out to us for car rental inquiries, support, or bookings. We're available 24/7 to assist you.">
+
+    <title>DriveNow - Contact Us</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <!-- BOOTSTRAP -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">    <script>
+        window.isUserAuthenticated = "{{ user.is_authenticated }}" === "True";
+        window.userName = "{{ user.username }}";
+    </script>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+ ========================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
+
+    <div class="container">
+
+        <!-- LOGO -->
+
+        <a class="navbar-brand logo-text"
+           href="index.html">
+
+            <span class="drive"
+                  style="font-size: 40px; font-weight: 800;">Drive</span>
+
+            <span class="now"
+                  style="font-size: 40px; font-weight: 800;">Now</span>
+
+        </a>
+
+        <!-- MOBILE TOGGLE -->
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- NAVBAR CONTENT -->
+
+        <div class="collapse navbar-collapse"
+             id="navbarSupportedContent">
+
+            <!-- NAV LINKS -->
+
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html"> Home </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="cars.html"> Cars </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html"> About </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="price.html"> Pricing </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="contact.html"> Contact </a>
+                </li>
+
+            </ul>
+
+            <!-- RIGHT BUTTONS -->
+
+            <div class="d-flex gap-3 align-items-center">
+                <button class="login-btn">Login</button>
+                <button class="book-btn">Book Now</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- =========================
+     CONTACT HERO
+========================= -->
+
+<section class="contact-hero">
+
+    <div class="container text-center">
+
+        <span>Get In Touch</span>
+
+        <h1>Contact Us</h1>
+
+        <p>Have questions or need help? We're here 24/7 to assist you with anything you need.</p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     INFO CARDS SECTION
+========================= -->
+
+<section class="contact-info-section">
+
+    <div class="container">
+
+        <div class="row g-4 justify-content-center">
+
+            <!-- CARD 1 - PHONE -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">📞</div>
+
+                    <h3>Call Us</h3>
+
+                    <p>+92 318 7538771</p>
+
+                    <p>+92 300 0000000</p>
+
+                    <span>Mon – Sun, 9am – 9pm</span>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 2 - EMAIL -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">✉️</div>
+
+                    <h3>Email Us</h3>
+
+                    <p>info@drivenow.com</p>
+
+                    <p>support@drivenow.com</p>
+
+                    <span>We reply within 1 hour</span>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 3 - LOCATION -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">📍</div>
+
+                    <h3>Visit Us</h3>
+
+                    <p>University Road, Sargodha</p>
+
+                    <p>Punjab, Pakistan</p>
+
+                    <span>Open 7 days a week</span>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 4 - LIVE CHAT -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">💬</div>
+
+                    <h3>Live Chat</h3>
+
+                    <p>Chat with our agents</p>
+
+                    <p>instantly online</p>
+
+                    <span>Available 24/7</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     CONTACT FORM + MAP
+========================= -->
+
+<section class="contact-form-section">
+
+    <div class="container">
+
+        <div class="row g-5 align-items-start">
+
+            <!-- FORM -->
+
+            <div class="col-lg-7">
+
+                <div class="contact-form-box">
+
+                    <div class="contact-form-header">
+
+                        <span>Send a Message</span>
+
+                        <h2>We'd Love to Hear From You</h2>
+
+                        <p>Fill out the form below and our team will get back to you shortly.</p>
+
+                    </div>
+
+                    <form id="contactForm" novalidate>
+
+                        <div class="row g-4">
+
+                            <!-- NAME -->
+
+                            <div class="col-md-6">
+                                <label for="contactName">Full Name</label>
+                                <input type="text"
+                                       id="contactName"
+                                       class="form-control contact-input"
+                                       placeholder="e.g. John Carter"
+                                       required>
+                            </div>
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6">
+                                <label for="contactEmail">Email Address</label>
+                                <input type="email"
+                                       id="contactEmail"
+                                       class="form-control contact-input"
+                                       placeholder="e.g. john@email.com"
+                                       required>
+                            </div>
+
+                            <!-- PHONE -->
+
+                            <div class="col-md-6">
+                                <label for="contactPhone">Phone Number</label>
+                                <input type="tel"
+                                       id="contactPhone"
+                                       class="form-control contact-input"
+                                       placeholder="e.g. +92 300 0000000">
+                            </div>
+
+                            <!-- SUBJECT -->
+
+                            <div class="col-md-6">
+                                <label for="contactSubject">Subject</label>
+                                <select id="contactSubject"
+                                        class="form-select contact-input">
+                                    <option selected disabled>Select a subject</option>
+                                    <option>Car Rental Inquiry</option>
+                                    <option>Booking Support</option>
+                                    <option>Pricing Information</option>
+                                    <option>Complaint / Feedback</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+
+                            <!-- MESSAGE -->
+
+                            <div class="col-12">
+                                <label for="contactMessage">Your Message</label>
+                                <textarea id="contactMessage"
+                                          class="form-control contact-input"
+                                          rows="5"
+                                          placeholder="Write your message here..."
+                                          required></textarea>
+                            </div>
+
+                            <!-- SUBMIT -->
+
+                            <div class="col-12">
+                                <button type="submit"
+                                        id="contactSubmitBtn"
+                                        class="contact-submit-btn">
+                                    Send Message 🚀
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <!-- SUCCESS MESSAGE -->
+
+                    <div class="contact-success" id="contactSuccess">
+                        ✅ Thank you! Your message has been sent. We'll get back to you shortly.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SIDE INFO -->
+
+            <div class="col-lg-5">
+
+                <!-- MAP PLACEHOLDER -->
+
+                <div class="contact-map-box">
+
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108765.83513157427!2d72.57345!3d32.08366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391f962b1b0e06cf%3A0xb8d67d9082c2df3f!2sSargodha%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000"
+                        width="100%"
+                        height="300"
+                        style="border:0; border-radius: 16px;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="DriveNow Location">
+                    </iframe>
+
+                </div>
+
+                <!-- WORKING HOURS -->
+
+                <div class="contact-hours-box">
+
+                    <h3>🕐 Working Hours</h3>
+
+                    <ul>
+                        <li>
+                            <span>Monday – Friday</span>
+                            <span>9:00 AM – 9:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Saturday</span>
+                            <span>10:00 AM – 7:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Sunday</span>
+                            <span>11:00 AM – 5:00 PM</span>
+                        </li>
+                        <li class="contact-hours-highlight">
+                            <span>Emergency Support</span>
+                            <span>24 / 7</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- SOCIAL LINKS -->
+
+                <div class="contact-social-box">
+
+                    <h3>Follow Us</h3>
+
+                    <div class="social-links">
+                        <a href="https://wa.me/qr/QRHH4DNFWYCQL1" title="WhatsApp">🌐</a>
+                        <a href="https://wa.me/qr/QRHH4DNFWYCQL1" title="Facebook">📘</a>
+                        <a href="https://www.instagram.com/stoic_a_mystery?igsh=cTFlbmlpancwejAy" title="Instagram">📸</a>
+                        <a href="https://www.youtube.com/" title="YouTube">▶</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     FAQ SECTION
+========================= -->
+
+<section class="contact-faq-section">
+
+    <div class="container">
+
+        <div class="contact-faq-title text-center">
+
+            <span>Common Questions</span>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <p>Quick answers to questions you may have. Can't find an answer? Contact us directly.</p>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="accordion" id="contactFAQ">
+
+                    <!-- FAQ 1 -->
+
+                    <div class="accordion-item contact-faq-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button contact-faq-btn"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
+                                How do I book a car?
+                            </button>
+
+                        </h2>
+
+                        <div id="faq1"
+                             class="accordion-collapse collapse show"
+                             data-bs-parent="#contactFAQ">
+
+                            <div class="accordion-body contact-faq-body">
+                                Simply browse our Cars page, pick your preferred vehicle, select your pickup and return dates, and click "Book Now". Our team will confirm your booking within minutes.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FAQ 2 -->
+
+                    <div class="accordion-item contact-faq-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button contact-faq-btn collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
+                                What documents do I need to rent a car?
+                            </button>
+
+                        </h2>
+
+                        <div id="faq2"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#contactFAQ">
+
+                            <div class="accordion-body contact-faq-body">
+                                You'll need a valid driving license, a government-issued CNIC (National ID Card), and a credit or debit card for the security deposit. International clients may use a passport.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FAQ 3 -->
+
+                    <div class="accordion-item contact-faq-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button contact-faq-btn collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
+                                Can I cancel or modify my booking?
+                            </button>
+
+                        </h2>
+
+                        <div id="faq3"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#contactFAQ">
+
+                            <div class="accordion-body contact-faq-body">
+                                Yes! Cancellations made 24 hours before the pickup time are fully refunded. Modifications can be made anytime by contacting our support team at no extra charge.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FAQ 4 -->
+
+                    <div class="accordion-item contact-faq-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button contact-faq-btn collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq4">
+                                Do you offer airport pickup & drop-off?
+                            </button>
+
+                        </h2>
+
+                        <div id="faq4"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#contactFAQ">
+
+                            <div class="accordion-body contact-faq-body">
+                                Absolutely! We offer airport pickup and drop-off services in all major cities. Simply mention this at the time of booking or contact us, and we'll arrange it for you.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FAQ 5 -->
+
+                    <div class="accordion-item contact-faq-item">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button contact-faq-btn collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq5">
+                                Is insurance included in the rental price?
+                            </button>
+
+                        </h2>
+
+                        <div id="faq5"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#contactFAQ">
+
+                            <div class="accordion-body contact-faq-body">
+                                Basic insurance is included in all our rental packages. Full comprehensive coverage is available as an add-on for premium peace of mind.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     FOOTER SECTION
+========================= -->
+
+<footer class="footer">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- ABOUT -->
+
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-box">
+                    <h2 class="footer-logo">
+                        <span class="drive">Drive</span><span class="now">Now</span>
+                    </h2>
+                    <p>
+                        Premium car rental platform providing luxury, sports, and family
+                        cars at affordable prices. Fast booking and trusted service worldwide.
+                    </p>
+                </div>
+            </div>
+
+            <!-- QUICK LINKS -->
+
+            <div class="col-lg-2 col-md-6">
+                <div class="footer-box">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cars.html">Cars</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="price.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SERVICES -->
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="cars.html">Luxury Cars</a></li>
+                        <li><a href="cars.html">Sports Cars</a></li>
+                        <li><a href="cars.html">SUV Rental</a></li>
+                        <li><a href="cars.html">Business Trips</a></li>
+                        <li><a href="cars.html">Airport Pickup</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CONTACT -->
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box">
+                    <h3>Contact Us</h3>
+                    <p>📍 Sargodha, Pakistan</p>
+                    <p>📞 +92 318 7538771</p>
+                    <p>✉ info@drivenow.com</p>
+                    <div class="social-links">
+                        <a href="https://wa.me/qr/QRHH4DNFWYCQL1">🌐</a>
+                        <a href="https://wa.me/qr/QRHH4DNFWYCQL1">📘</a>
+                        <a href="https://www.instagram.com/stoic_a_mystery?igsh=cTFlbmlpancwejAy">📸</a>
+                        <a href="https://www.youtube.com/">▶</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COPYRIGHT -->
+
+        <div class="footer-bottom">
+            <p>© 2026 DriveNow. All Rights Reserved.</p>
+        </div>
+
+    </div>
+</footer>
+
+<!-- BOOTSTRAP JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="script.js"></script>
+
+<!-- Contact form is handled by script.js -->
+
+</body>
+
+</html>
