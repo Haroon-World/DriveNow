@@ -21,16 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ─────────────────────────────────────────────
 
 # IMPORTANT: In production, set the DN_SECRET_KEY environment variable.
-SECRET_KEY = os.environ.get(
-    'DN_SECRET_KEY',
-    'django-insecure-dev-only-change-this-in-production-abc123xyz'
-)
+SECRET_KEY = os.environ.get('DN_SECRET_KEY') or os.environ.get('SECRET_KEY') or os.urandom(32).hex()
 
-# IMPORTANT: Set DN_DEBUG=0 in production.
-DEBUG = os.environ.get('DN_DEBUG', '1') == '1'
+# In production, set DN_DEBUG=0 or DN_DEBUG=False
+DEBUG = os.environ.get('DN_DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
 # Hosts allowed to serve the app.
-# In production, set DN_ALLOWED_HOSTS="yourdomain.com,www.yourdomain.com"
 _raw_hosts = os.environ.get('DN_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 ALLOWED_HOSTS = [h.strip() for h in _raw_hosts.split(',') if h.strip()]
 
@@ -90,21 +86,29 @@ WSGI_APPLICATION = 'drivenow_project.wsgi.application'
 
 
 # ─────────────────────────────────────────────
-#  DATABASE  — MySQL (local dev)
+#  DATABASE  — MySQL (Production / Dev) or SQLite (Local Testing)
 # ─────────────────────────────────────────────
-DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.mysql',
-        'NAME':     os.environ.get('DN_DB_NAME',     'drivenow_db'),
-        'USER':     os.environ.get('DN_DB_USER',     'root'),
-        'PASSWORD': os.environ.get('DN_DB_PASSWORD', ''),
-        'HOST':     os.environ.get('DN_DB_HOST',     'localhost'),
-        'PORT':     os.environ.get('DN_DB_PORT',     '3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
+if os.environ.get('DN_DB_ENGINE') == 'sqlite' or not os.environ.get('DN_DB_NAME'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE':   'django.db.backends.mysql',
+            'NAME':     os.environ.get('DN_DB_NAME',     'drivenow_db'),
+            'USER':     os.environ.get('DN_DB_USER',     'root'),
+            'PASSWORD': os.environ.get('DN_DB_PASSWORD', ''),
+            'HOST':     os.environ.get('DN_DB_HOST',     'localhost'),
+            'PORT':     os.environ.get('DN_DB_PORT',     '3306'),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            },
+        }
+    }
 
 
 # ─────────────────────────────────────────────
